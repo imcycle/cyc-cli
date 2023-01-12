@@ -17,7 +17,7 @@
     "lib"
   ],
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "access": "public"
   },
   "scripts": {
     "test": "node ./__tests__/core.test.js"
@@ -25,5 +25,5 @@
   "dependencies": {
     "@cyc-cli/utils": "^1.0.6"
   },
-  "gitHead": "ae317a5f243e6776b863ec707642eccb6d33f6a8"
+  "gitHead": "9931539752e699336e51b64ee28a018cde172d2d"
 }
