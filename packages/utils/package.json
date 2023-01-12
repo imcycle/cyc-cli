@@ -1,0 +1,25 @@
+{
+  "name": "@cyc-cli/utils",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "caoyucong <whosmeya@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/utils.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "test": "node ./__tests__/utils.test.js"
+  },
+  "dependencies": {
+    "npmlog": "^7.0.1"
+  }
+}
