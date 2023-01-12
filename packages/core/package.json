@@ -1,6 +1,6 @@
 {
   "name": "@cyc-cli/core",
-  "version": "1.0.4",
+  "version": "1.0.0",
   "description": "> TODO: description",
   "author": "caoyucong <whosmeya@gmail.com>",
   "homepage": "",
@@ -24,6 +24,5 @@
   },
   "dependencies": {
     "@cyc-cli/utils": "^1.0.1"
-  },
-  "gitHead": "3aafa955d42da4e772621906a28cec0b1cb748b7"
+  }
 }
