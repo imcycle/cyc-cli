@@ -24,5 +24,6 @@
   },
   "dependencies": {
     "@cyc-cli/utils": "^1.0.5"
-  }
+  },
+  "gitHead": "ae317a5f243e6776b863ec707642eccb6d33f6a8"
 }
