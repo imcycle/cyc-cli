@@ -1,6 +1,6 @@
 {
   "name": "@cyc-cli/core",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "> TODO: description",
   "author": "caoyucong <whosmeya@gmail.com>",
   "homepage": "",
@@ -23,8 +23,8 @@
     "test": "node ./__tests__/core.test.js"
   },
   "dependencies": {
-    "@cyc-cli/utils": "file:../utils",
     "@cyc-cli/init": "file:../init",
+    "@cyc-cli/utils": "file:../utils",
     "commander": "^10.0.0"
   },
   "gitHead": "9931539752e699336e51b64ee28a018cde172d2d"
