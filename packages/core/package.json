@@ -23,7 +23,9 @@
     "test": "node ./__tests__/core.test.js"
   },
   "dependencies": {
-    "@cyc-cli/utils": "^1.0.7"
+    "@cyc-cli/utils": "file:../utils",
+    "@cyc-cli/init": "file:../init",
+    "commander": "^10.0.0"
   },
   "gitHead": "9931539752e699336e51b64ee28a018cde172d2d"
 }
