@@ -16,6 +16,7 @@ const path = require("path");
 // loading
 const ora = require("ora");
 const glob = require("glob");
+const ejs = require("ejs");
 
 // 常量
 const TYPE_PROJECT = "project";
@@ -28,9 +29,9 @@ const projectTemplateList = [
   {
     name: "vue2标准模板",
     npmName: "cyc-cli-template-vue2",
-    version: "0.1.0",
+    version: "0.1.1",
     type: "normal",
-    installCommand: "npm1 install",
+    installCommand: "npm install",
     startCommand: "npm run serve",
   },
   {
@@ -167,6 +168,10 @@ async function getProjectInfo() {
     projectInfo = {
       type,
       ...project,
+      projectNameLowCase: require("kebab-case")(project.projectName).replace(
+        /^-/,
+        ""
+      ),
     };
   } else if (type === TYPE_COMPONENT) {
     // 创建模板
@@ -188,9 +193,9 @@ async function downloadTemplate(projectInfo) {
     "node_modules"
   );
 
-  const spinner = ora("下载中..").start();
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  spinner.stop();
+  //   const spinner = ora("下载中..").start();
+  //   await new Promise((resolve) => setTimeout(resolve, 2000));
+  //   spinner.stop();
 
   await npminstall({
     // install root dir
@@ -226,7 +231,8 @@ async function installTemplate(arg) {
     ".store",
     `${templateInfo.npmName}@${templateInfo.version}`,
     "node_modules",
-    templateInfo.npmName
+    templateInfo.npmName,
+    "template"
   );
   const projectPath = process.cwd();
   fse.ensureDirSync(templatePath);
@@ -236,10 +242,17 @@ async function installTemplate(arg) {
     // --常规安装--
     // 将包拷贝到目录下
     fse.copySync(templatePath, projectPath);
+
+    // ejs渲染
+    await ejsRender({
+      ignore: ["**/node_modules/**", "public/**"],
+      data: projectInfo,
+    });
+
     // 依赖安装
-    execCommand(templateInfo.installCommand);
+    await execCommand(templateInfo.installCommand);
     // 启动命令
-    execCommand(templateInfo.startCommand);
+    await execCommand(templateInfo.startCommand);
   } else if (templateInfo.type === TEMPLATE_TYPE_NORMAL) {
     // --自定义安装--
   }
@@ -252,7 +265,7 @@ function checkCommand(cmd) {
 async function execCommand(command) {
   const installCmd = command.split(" ");
   const cmd = installCmd[0];
-  const args = [installCmd[1]];
+  const args = installCmd.slice(1);
 
   if (!checkCommand(cmd)) {
     throw new Error("command 命令不合法!");
@@ -265,7 +278,46 @@ async function execCommand(command) {
   });
   console.log(r);
 
-  if (r !==0 ) {
+  if (r !== 0) {
     throw new Error("执行 command 命令失败!");
   }
+}
+
+async function ejsRender(options) {
+  return new Promise((resolve, reject) => {
+    glob(
+      "**",
+      {
+        cwd: process.cwd(),
+        ignore: options.ignore || ["**/node_modules/**"],
+        nodir: true,
+      },
+      (err, files) => {
+        if (err) {
+          reject(err);
+        }
+        Promise.all(
+          files.map((file) => {
+            const filePath = path.resolve(process.cwd(), file);
+            return new Promise((resolve1, reject1) => {
+              ejs.renderFile(filePath, options.data || {}, (err1, res1) => {
+                if (err1) {
+                  reject1(err1);
+                } else {
+                  fse.writeFileSync(filePath, res1);
+                  resolve1(res1);
+                }
+              });
+            });
+          })
+        )
+          .then(() => {
+            resolve();
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      }
+    );
+  });
 }

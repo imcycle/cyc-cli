@@ -28,9 +28,11 @@
   },
   "dependencies": {
     "@cyc-cli/utils": "file:../utils",
+    "ejs": "^3.1.8",
     "fs-extra": "^11.1.0",
     "glob": "^8.1.0",
     "inquirer": "^7.0.0",
+    "kebab-case": "^1.0.2",
     "npminstall": "^7.4.0",
     "ora": "^4.0.0",
     "semver": "^7.3.8"
