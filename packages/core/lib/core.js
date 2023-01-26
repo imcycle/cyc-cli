@@ -28,7 +28,7 @@ function registerCommand() {
     .option("--packagePath <packagePath>", "手动指定init包路径")
     .option("--force", "强制安装")
     .action((type, { packagePath, force }) => {
-      init();
+      init({name: type, packagePath, force});
     });
 
   program.parse(process.argv);

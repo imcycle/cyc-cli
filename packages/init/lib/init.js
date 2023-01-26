@@ -46,7 +46,7 @@ const projectTemplateList = [
 
 module.exports = core;
 
-async function core() {
+async function core({name, packagePath}) {
   try {
     // 1.准备阶段
     const res = await prepare();
@@ -255,6 +255,7 @@ async function installTemplate(arg) {
     await execCommand(templateInfo.startCommand);
   } else if (templateInfo.type === TEMPLATE_TYPE_NORMAL) {
     // --自定义安装--
+    // 模板包中放 index.js , require引进来，exec node 执行
   }
 }
 
